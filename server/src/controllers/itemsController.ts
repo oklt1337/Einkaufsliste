@@ -37,7 +37,16 @@ export const listItems: RequestHandler = asyncHandler(async (_req, res) => {
 });
 
 export const addItem: RequestHandler = asyncHandler(async (req, res) => {
-  const { name } = createItemSchema.parse(req.body);
+  let parsed;
+  try {
+    parsed = createItemSchema.parse(req.body);
+  } catch (err) {
+    if (err && typeof err === 'object' && 'issues' in err) {
+      throw new AppError(400, 'Validation error', err);
+    }
+    throw err;
+  }
+  const { name } = parsed;
   const item = await createItem(name);
   res.status(201).json(mapToDTO(item));
 });
