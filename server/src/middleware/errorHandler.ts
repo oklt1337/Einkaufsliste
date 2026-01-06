@@ -13,7 +13,7 @@ export class AppError extends Error {
   }
 }
 
-export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+export const errorHandler: ErrorRequestHandler = (err, _req, res) => {
   if (err instanceof ZodError) {
     res.status(400).json({ message: 'Validation error', details: err.flatten() });
     return;
