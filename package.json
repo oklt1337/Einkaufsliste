@@ -1,0 +1,32 @@
+{
+  "name": "fullstack-shopping-list",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server",
+    "shared"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "dev": "concurrently -n server,client -c blue,green \"npm:dev --workspace server\" \"npm:dev --workspace client\"",
+    "test": "npm run test --workspace server && npm run test --workspace client && npm run test:e2e",
+    "test:e2e": "playwright test",
+    "lint": "npm run lint --workspace server && npm run lint --workspace client",
+    "format": "npm run format --workspace server && npm run format --workspace client",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.10.0",
+    "@typescript-eslint/parser": "^8.10.0",
+    "concurrently": "^9.0.1",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "prettier": "^3.3.3",
+    "typescript": "^5.6.3",
+    "@playwright/test": "^1.49.1"
+  }
+}
