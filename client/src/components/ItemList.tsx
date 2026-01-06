@@ -8,7 +8,6 @@ import {
   IconButton,
   List,
   ListItem,
-  ListItemSecondaryAction,
   ListItemText,
   Stack,
   Tooltip,
@@ -70,47 +69,45 @@ const DraggableItem = ({
       divider
       disableGutters
       secondaryAction={
-        <ListItemSecondaryAction>
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Tooltip title={strings.decreaseQuantity(item.name)}>
-              <span>
-                <IconButton
-                  aria-label={strings.decreaseQuantity(item.name)}
-                  onClick={() => onChangeQuantity(item.id, item.quantity - 1)}
-                  disabled={isDisabled}
-                  size="small"
-                >
-                  <RemoveIcon fontSize="small" />
-                </IconButton>
-              </span>
-            </Tooltip>
-            <Typography aria-label={strings.quantityOf(item.name)}>{item.quantity}</Typography>
-            <Tooltip title={strings.increaseQuantity(item.name)}>
-              <span>
-                <IconButton
-                  aria-label={strings.increaseQuantity(item.name)}
-                  onClick={() => onChangeQuantity(item.id, item.quantity + 1)}
-                  disabled={isDisabled}
-                  size="small"
-                >
-                  <AddIcon fontSize="small" />
-                </IconButton>
-              </span>
-            </Tooltip>
-            <Tooltip title={strings.deleteItem(item.name)}>
-              <span>
-                <IconButton
-                  aria-label={strings.deleteItem(item.name)}
-                  onClick={() => onDelete(item.id)}
-                  disabled={isDisabled}
-                  size="small"
-                >
-                  <DeleteOutlineIcon fontSize="small" />
-                </IconButton>
-              </span>
-            </Tooltip>
-          </Stack>
-        </ListItemSecondaryAction>
+        <Stack direction="row" spacing={1} alignItems="center">
+          <Tooltip title={strings.decreaseQuantity(item.name)}>
+            <span>
+              <IconButton
+                aria-label={strings.decreaseQuantity(item.name)}
+                onClick={() => onChangeQuantity(item.id, item.quantity - 1)}
+                disabled={isDisabled}
+                size="small"
+              >
+                <RemoveIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Typography aria-label={strings.quantityOf(item.name)}>{item.quantity}</Typography>
+          <Tooltip title={strings.increaseQuantity(item.name)}>
+            <span>
+              <IconButton
+                aria-label={strings.increaseQuantity(item.name)}
+                onClick={() => onChangeQuantity(item.id, item.quantity + 1)}
+                disabled={isDisabled}
+                size="small"
+              >
+                <AddIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Tooltip title={strings.deleteItem(item.name)}>
+            <span>
+              <IconButton
+                aria-label={strings.deleteItem(item.name)}
+                onClick={() => onDelete(item.id)}
+                disabled={isDisabled}
+                size="small"
+              >
+                <DeleteOutlineIcon fontSize="small" />
+              </IconButton>
+            </span>
+          </Tooltip>
+        </Stack>
       }
     >
       <Tooltip title={strings.dragToSort}>
@@ -131,7 +128,7 @@ const DraggableItem = ({
         checked={item.bought}
         onChange={(event) => onToggle(item.id, event.target.checked)}
         disabled={isDisabled}
-        inputProps={{ 'aria-label': strings.itemBought(item.name) }}
+        slotProps={{ input: { 'aria-label': strings.itemBought(item.name) } }}
       />
       <ListItemText
         primary={

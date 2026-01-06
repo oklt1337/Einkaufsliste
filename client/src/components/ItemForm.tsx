@@ -37,7 +37,7 @@ const ItemForm = ({ value, onChange, onSubmit, isDisabled }: ItemFormProps) => {
           disabled={isDisabled}
           fullWidth
           required
-          InputLabelProps={{ required: false }}
+          slotProps={{ inputLabel: { required: false } }}
         />
         {isMobile ? (
           <IconButton

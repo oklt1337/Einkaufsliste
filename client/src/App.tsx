@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ShoppingItemDTO } from '../../shared/src/dto';
 import { createItem, deleteItem, getItems, updateItem } from './api/items';
 import ItemForm from './components/ItemForm';
@@ -40,6 +40,7 @@ const App = () => {
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [titleDraft, setTitleDraft] = useState('');
   const [isTitleSaving, setIsTitleSaving] = useState(false);
+  const titleInputRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
     const loadTitle = async () => {
@@ -54,6 +55,12 @@ const App = () => {
     };
     void loadTitle();
   }, []);
+
+  useEffect(() => {
+    if (isEditingTitle) {
+      titleInputRef.current?.focus();
+    }
+  }, [isEditingTitle]);
 
   const hasItems = items.length > 0;
 
@@ -277,7 +284,6 @@ const App = () => {
                         variant="outlined"
                         fullWidth
                         multiline
-                        autoFocus
                         onKeyDown={(event) => {
                           if (event.key === 'Enter' && !event.shiftKey) {
                             event.preventDefault();
@@ -288,17 +294,20 @@ const App = () => {
                             handleCancelEdit();
                           }
                         }}
-                        InputProps={{
-                          sx: {
+                        inputRef={titleInputRef}
+                        slotProps={{
+                          htmlInput: { 'aria-label': strings.titleLabel },
+                        }}
+                        sx={{
+                          '& .MuiInputBase-root': {
                             fontSize: { xs: '1.6rem', sm: '2.125rem' },
                             fontWeight: 600,
                             lineHeight: 1.2,
-                            '& textarea': {
-                              overflowWrap: 'anywhere',
-                            },
+                          },
+                          '& textarea': {
+                            overflowWrap: 'anywhere',
                           },
                         }}
-                        inputProps={{ 'aria-label': strings.titleLabel }}
                       />
                       <Stack direction="row" spacing={1}>
                         {isMobile ? (
