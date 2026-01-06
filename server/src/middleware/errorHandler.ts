@@ -27,6 +27,11 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res) => {
     return;
   }
 
+  if (err instanceof mongoose.Error.ValidationError) {
+    res.status(400).json({ message: 'Validation error', details: err.errors });
+    return;
+  }
+
   if (err instanceof mongoose.Error.CastError) {
     res.status(400).json({ message: 'Invalid id' });
     return;
